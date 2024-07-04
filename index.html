@@ -1,0 +1,38 @@
+// EDIT THESE
+const urls = {
+    windows: "https://bluepinstudio.com/",
+    macos: "https://www.apple.com/",
+    linux: "https://bluepinstudio.com/",
+    ios: "https://www.apple.com/ca/app-store/",
+    android: "https://play.google.com/store/games?hl=en",
+};
+
+(function handleRedirect() {
+    const platform = window.navigator?.userAgentData?.platform || window.navigator.platform;
+    const userAgent = window.navigator.userAgent;
+    
+    let url = urls.windows; // Default URL
+
+    const platformToUrl = {
+        'Macintosh': urls.macos,
+        'MacIntel': urls.macos,
+        'MacPPC': urls.macos,
+        'Mac68K': urls.macos,
+        'iPhone': urls.ios,
+        'iPad': urls.ios,
+        'iPod': urls.ios,
+        'Win32': urls.windows,
+        'Win64': urls.windows,
+        'Windows': urls.windows,
+        'WinCE': urls.windows,
+        'Linux': urls.linux
+    };
+
+    if (/Android/.test(userAgent)) {
+        url = urls.android;
+    } else if (platformToUrl[platform]) {
+        url = platformToUrl[platform];
+    }
+
+    window.open(url);
+})();

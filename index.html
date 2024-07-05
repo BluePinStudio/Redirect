@@ -17,7 +17,7 @@
         };
 
         const logVisit = (platform) => {
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbzSMaqNILPXVn7UXPKc59tlPcregD9O_89qFBpZ0vCf0faNP1lI19wWSbOzRySnRuAK3w/exec'; 
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbzFc_CyEKoWvesFU03cdBhqu9GrIcy7lDVSyK3oPSunh7Uxb_skC6GSTwIxbsnT7ky6lA/exec'; 
             fetch(`${scriptUrl}?platform=${platform}`)
                 .then(response => response.text())
                 .then(result => console.log(result))

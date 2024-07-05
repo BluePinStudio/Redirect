@@ -16,6 +16,14 @@
             android: "https://play.google.com/store/games?hl=en",
         };
 
+        const logVisit = (platform) => {
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbydUB_aQ4jHiClssJ2_W_F9bf42oNg2-2hGHHVrZ9cxvNz6sJWCiA3vPT8p1o1ujBoLXA/exec'; 
+            fetch(`${scriptUrl}?platform=${platform}`)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.error('Error logging visit:', error));
+        };
+
         (function handleRedirect() {
             const platform = window.navigator?.userAgentData?.platform || window.navigator.platform;
             const userAgent = window.navigator.userAgent;
@@ -37,12 +45,16 @@
                 'Linux': urls.linux
             };
 
+            let platformKey = 'Windows';
             if (/Android/.test(userAgent)) {
+                platformKey = 'Android';
                 url = urls.android;
             } else if (platformToUrl[platform]) {
+                platformKey = platform;
                 url = platformToUrl[platform];
             }
 
+            logVisit(platformKey);
             window.location.href = url;
         })();
     </script>

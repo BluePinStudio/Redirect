@@ -16,7 +16,7 @@
         };
 
         const logVisit = (platform) => {
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbzG6JmqzbNJX_9hu8suRH6OrCtu0gy-_Q4PloTY11MBp7DVt83XuzKLaVxmjFO1JeYpEA/exec'; 
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbzm38Xgdj8azCfuX9NT1r0exZ1_prlbLeg9WhqZgjvOhN_Sn8Ys15rbnGpNnHXF0HLVnA/exec'; 
             fetch(`${scriptUrl}?platform=${platform}`)
                 .then(response => response.text())
                 .then(result => console.log(result))
@@ -29,7 +29,7 @@
             console.log('User Agent:', userAgent);
 
             let url = urls.windows; // Default URL
-            let platformKey = 'windows'; // Default platform
+            let platformKey = 'undetected platform'; // Default platform
 
             if (/iPhone|iPad|iPod/.test(userAgent)) {
                 platformKey = 'ios';

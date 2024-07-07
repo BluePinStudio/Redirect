@@ -25,39 +25,28 @@
         };
 
         (function handleRedirect() {
-            const platform = window.navigator?.userAgentData?.platform || window.navigator.platform;
-            const userAgent = window.navigator.userAgent;
+            const userAgent = window.navigator.userAgent || window.navigator.vendor || window.opera;
 
-            console.log('Platform:', platform);
             console.log('User Agent:', userAgent);
 
             let url = urls.windows; // Default URL
+            let platformKey = 'windows'; // Default platform
 
-            const platformToUrl = {
-                'Macintosh': urls.macos,
-                'MacIntel': urls.macos,
-                'MacPPC': urls.macos,
-                'Mac68K': urls.macos,
-                'iPhone': urls.ios,
-                'iPad': urls.ios,
-                'iPod': urls.ios,
-                'Win32': urls.windows,
-                'Win64': urls.windows,
-                'Windows': urls.windows,
-                'WinCE': urls.windows,
-                'Linux': urls.linux
-            };
-
-            let platformKey = 'Windows';
             if (/iPhone|iPad|iPod/.test(userAgent)) {
                 platformKey = 'ios';
                 url = urls.ios;
             } else if (/Android/.test(userAgent)) {
-                platformKey = 'Android';
+                platformKey = 'android';
                 url = urls.android;
-            } else if (platformToUrl[platform]) {
-                platformKey = platform;
-                url = platformToUrl[platform];
+            } else if (/Macintosh|MacIntel|MacPPC|Mac68K/.test(userAgent)) {
+                platformKey = 'macos';
+                url = urls.macos;
+            } else if (/Linux/.test(userAgent)) {
+                platformKey = 'linux';
+                url = urls.linux;
+            } else if (/Win32|Win64|Windows|WinCE/.test(userAgent)) {
+                platformKey = 'windows';
+                url = urls.windows;
             }
 
             console.log('Detected Platform Key:', platformKey);

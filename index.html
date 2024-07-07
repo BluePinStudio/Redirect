@@ -16,10 +16,10 @@
         };
 
         const logVisit = (platform) => {
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbzm38Xgdj8azCfuX9NT1r0exZ1_prlbLeg9WhqZgjvOhN_Sn8Ys15rbnGpNnHXF0HLVnA/exec'; 
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbxlHeIKXSssy0cbLkRMcUDQyI4KPKHLpvtlfP1cqNS9Mn9ELy805sKo01ZoF5vfPzcGaw/exec';
             fetch(`${scriptUrl}?platform=${platform}`)
                 .then(response => response.text())
-                .then(result => console.log(result))
+                .then(result => console.log('Log Visit Result:', result))
                 .catch(error => console.error('Error logging visit:', error));
         };
 

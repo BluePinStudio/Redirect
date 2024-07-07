@@ -7,7 +7,6 @@
 </head>
 <body>
     <script>
-        // EDIT THESE
         const urls = {
             windows: "https://store.steampowered.com/app/1578290/Pixel_Fixel/",
             macos: "https://www.apple.com/ca/app-store/",
@@ -17,7 +16,7 @@
         };
 
         const logVisit = (platform) => {
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycby-9ruRuf-759HVx9PIHDU8nW5bu7GWcICUyxJfLFXTQH0XCuzddyj_kthFnV04r7znnA/exec'; 
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbzG6JmqzbNJX_9hu8suRH6OrCtu0gy-_Q4PloTY11MBp7DVt83XuzKLaVxmjFO1JeYpEA/exec'; 
             fetch(`${scriptUrl}?platform=${platform}`)
                 .then(response => response.text())
                 .then(result => console.log(result))

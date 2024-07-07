@@ -28,6 +28,9 @@
             const platform = window.navigator?.userAgentData?.platform || window.navigator.platform;
             const userAgent = window.navigator.userAgent;
 
+            console.log('Platform:', platform);
+            console.log('User Agent:', userAgent);
+
             let url = urls.windows; // Default URL
 
             const platformToUrl = {
@@ -46,7 +49,10 @@
             };
 
             let platformKey = 'Windows';
-            if (/Android/.test(userAgent)) {
+            if (/iPhone|iPad|iPod/.test(userAgent)) {
+                platformKey = 'ios';
+                url = urls.ios;
+            } else if (/Android/.test(userAgent)) {
                 platformKey = 'Android';
                 url = urls.android;
             } else if (platformToUrl[platform]) {
@@ -54,6 +60,7 @@
                 url = platformToUrl[platform];
             }
 
+            console.log('Detected Platform Key:', platformKey);
             logVisit(platformKey);
             window.location.href = url;
         })();

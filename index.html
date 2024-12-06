@@ -1,20 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Fixel is a color matching game! Ad free with tons of levels.</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/ >
+    <title>Pixel Fixel – Redirecting to your platform store...</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .loading {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .fallback-links {
+            display: none;
+        }
+        noscript .fallback-links {
+            display: block;
+        }
+    </style>
 </head>
 <body>
+    <noscript>
+        <h1>Pixel Fixel</h1>
+        <p>JavaScript is disabled, so please select your platform:</p>
+        <div class="fallback-links">
+            <ul>
+                <li><a href="https://store.steampowered.com/app/1578290/Pixel_Fixel/">Windows</a></li>
+                <li><a href="https://apps.apple.com/ca/app/pixel-fixel/id6504993028">Mac (iOS App Store)</a></li>
+                <li><a href="https://play.google.com/store/apps/details?id=com.bluepinstudio.pixelfixel">Linux/Android (Google Play)</a></li>
+                <li><a href="https://apps.apple.com/ca/app/pixel-fixel/id6504993028">iOS (App Store)</a></li>
+                <li><a href="https://play.google.com/store/apps/details?id=com.bluepinstudio.pixelfixel">Android (Google Play)</a></li>
+            </ul>
+        </div>
+    </noscript>
+
+    <div class="loading" id="loadingMessage">Detecting your platform, please wait...</div>
+
     <script>
+        // Define the URLs for each platform
         const urls = {
             windows: "https://store.steampowered.com/app/1578290/Pixel_Fixel/",
             macos: "https://apps.apple.com/ca/app/pixel-fixel/id6504993028",
             linux: "https://play.google.com/store/apps/details?id=com.bluepinstudio.pixelfixel",
             ios: "https://apps.apple.com/ca/app/pixel-fixel/id6504993028",
             android: "https://play.google.com/store/apps/details?id=com.bluepinstudio.pixelfixel",
+            unknown: "https://bluepinstudio.com/pixel-fixel" // A generic fallback link
         };
 
+        // Logging function
         const logVisit = (platform) => {
             const scriptUrl = 'https://script.google.com/macros/s/AKfycbxlHeIKXSssy0cbLkRMcUDQyI4KPKHLpvtlfP1cqNS9Mn9ELy805sKo01ZoF5vfPzcGaw/exec';
             fetch(`${scriptUrl}?platform=${platform}`)
@@ -24,32 +60,33 @@
         };
 
         (function handleRedirect() {
-            const userAgent = window.navigator.userAgent || window.navigator.vendor || window.opera;
-
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
             console.log('User Agent:', userAgent);
 
-            let url = urls.windows; // Default URL
-            let platformKey = 'undetected platform'; // Default platform
+            let platformKey = 'unknown';
 
-            if (/iPhone|iPad|iPod/.test(userAgent)) {
+            // Detect platform by user agent:
+            if (/iPhone|iPad|iPod/i.test(userAgent)) {
                 platformKey = 'ios';
-                url = urls.ios;
-            } else if (/Android/.test(userAgent)) {
+            } else if (/Android/i.test(userAgent)) {
                 platformKey = 'android';
-                url = urls.android;
-            } else if (/Macintosh|MacIntel|MacPPC|Mac68K/.test(userAgent)) {
+            } else if (/Macintosh|MacIntel|MacPPC|Mac68K/i.test(userAgent)) {
                 platformKey = 'macos';
-                url = urls.macos;
-            } else if (/Linux/.test(userAgent)) {
+            } else if (/Linux/i.test(userAgent)) {
+                // On desktops, Linux will appear. On Chromebooks, etc. It’s a best guess.
                 platformKey = 'linux';
-                url = urls.linux;
-            } else if (/Win32|Win64|Windows|WinCE/.test(userAgent)) {
+            } else if (/Win32|Win64|Windows|WinCE/i.test(userAgent)) {
                 platformKey = 'windows';
-                url = urls.windows;
             }
 
-            console.log('Detected Platform Key:', platformKey);
+            const url = urls[platformKey] || urls.unknown;
+
+            console.log('Detected Platform:', platformKey);
+
+            // Log the visit
             logVisit(platformKey);
+
+            // Redirect the user
             window.location.href = url;
         })();
     </script>
